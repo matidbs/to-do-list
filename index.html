@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>To-Do List</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+  <div class="flex min-h-screen bg-gray-900">  
+  <main class="flex-1 flex justify-center items-center">
+  <div class="bg-gray-800 w-full max-w-md max-h-min p-6 rounded-2xl shadow-xl border border-gray-900 transition-shadow duration-300 hover:shadow-2xl">  
+    <h1 class="text-3xl antialiased font-sans text-white text-center mb-6 tracking-tight">
+      to-do
+    </h1>
+
+    <form id="formulario-tarea" class="antialiased relative max-w-md mx-auto mb-6">
+      <input 
+        type="text" 
+        id="nueva-tarea" 
+        placeholder="Escribí una tarea..." 
+        autocomplete="off"
+        class="w-full pr-32 p-3 bg-white text-black border border-gray-800 rounded-lg placeholder-gray-500 transition-all duration-200"
+      >
+      <button 
+        type="submit" 
+        class="absolute top-1/2 right-2 -translate-y-1/2 bg-gray-900 border border-white text-white font-bold px-2 py-2 rounded-lg hover:bg-gray-800 hover:shadow-md transition duration-200"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 w-5 h-5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+        </svg>
+      </button>
+    </form>
+
+  
+  <ul id="lista-tareas" class="space-y-2">
+  <!-- Ejemplo de tarea renderizada (JavaScript insertará aquí) -->
+</ul>
+  </div>
+</main>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

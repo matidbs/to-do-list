@@ -60,25 +60,7 @@ event.preventDefault(); // Evita que el formulario recargue la página
     tarea.toggleCheck(); // Cambia el estado de la tarea
     listTasks.find(t => t.text === texto).check = tarea.check; // Actualiza el estado en el arreglo
     localStorage.setItem('tarea', JSON.stringify(listTasks)); // Guardar cambios en localStorage
-  })
- 
-  ;
-  
-
-
- /* const botonCheck = document.createElement('button');
-  botonCheck.className = 'check-btn p-1 rounded hover:bg-green-600 transition';
-  botonCheck.title = 'Completar';
-  botonCheck.innerHTML = `
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-green-400 hover:text-white">
-      <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-    </svg>
-  `;
-  botonCheck.addEventListener('click', () => {
-    span.classList.toggle('line-through');
-    span.classList.toggle('text-gray-400');
   });
-*/
     const contenedorBotones = document.createElement('div');
     contenedorBotones.className = 'flex items-center gap-3'; // Los agrupa y les da espacio uniforme
     //contenedorBotones.appendChild(botonCheck);
@@ -103,7 +85,6 @@ function loadTasks() {
   listTasks = tareasGuardadas.map(t => Object.assign(new task(), t));
 
   listTasks.forEach(tarea => {
-
     const li = document.createElement('li');
     li.className = 'flex items-center justify-between bg-gray-900 p-3 rounded-lg shadow-sm hover:shadow-md transition duration-200';
 
@@ -161,6 +142,5 @@ function loadTasks() {
   });
 }
 
-//let taskExists(task);
 window.addEventListener('load', loadTasks); // Cargar tareas al iniciar
 document.getElementById('formulario-tarea').addEventListener('submit', addTask);

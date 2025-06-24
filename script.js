@@ -1,5 +1,6 @@
-
-let listTasks = []; // Arreglo para almacenar las tareas
+let listTasks = []; 
+const mensajeError = "¡Palabra muy larga! No puede tener más de 25 caracteres";
+const colorError = 'red'; 
 
 class task{
   constructor(text) {
@@ -14,6 +15,23 @@ class task{
   }
 }
 
+function mostrarMensajeError() {
+  const toast = document.getElementById('toast');
+  toast.className = `fixed top-6 left-1/2 transform -translate-x-1/2 bg-${colorError}-600 max-w-md text-white px-4 py-2 rounded-lg shadow-lg z-50 flex items-center gap-2`;
+  toast.classList.remove('hidden');
+  toast.innerHTML = `
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+      <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12ZM12 8.25a.75.75 0 0 1 .75.75v3.75a.75.75 0 0 1-1.5 0V9a.75.75 0 0 1 .75-.75Zm0 8.25a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" clip-rule="evenodd" />
+    </svg>
+    <span>${mensajeError}</span>
+  `;
+
+
+  setTimeout(() => {
+    toast.classList.add('hidden');
+  }, 3000);
+}
+
 function addTask(event) { 
 event.preventDefault(); // Evita que el formulario recargue la página
 
@@ -23,6 +41,16 @@ event.preventDefault(); // Evita que el formulario recargue la página
 
   if (texto === '') return; // No hacer nada si está vacío
 
+  //Evaluo la longitud de las palabras para que no rompa todo 
+  const palabrasTexto = texto.split(' ');
+  for(const palabra of palabrasTexto) {
+    if (palabra.length > 25){
+      mostrarMensajeError();
+      return;
+    }
+      
+  }
+  
   // Guardar la tarea en localStorage
   let tarea = new task(texto);
   listTasks.push(tarea);
@@ -33,7 +61,7 @@ event.preventDefault(); // Evita que el formulario recargue la página
   li.className = 'flex items-center justify-between bg-gray-900 p-3 rounded-lg shadow-sm hover:shadow-md transition duration-200';
 
   const span = document.createElement('span');
-  span.className = 'break words text-white';
+  span.className = 'break-words text-white';
   span.textContent = texto;
 
   const botonEliminar = document.createElement('button');
@@ -89,7 +117,7 @@ function loadTasks() {
     li.className = 'flex items-center justify-between bg-gray-900 p-3 rounded-lg shadow-sm hover:shadow-md transition duration-200';
 
     const span = document.createElement('span');
-    span.className = 'break words text-white';
+    span.className = 'break-words text-white';
     span.textContent = tarea.text; // mostrar texto correcto
 
     const botonEliminar = document.createElement('button');

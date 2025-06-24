@@ -33,7 +33,7 @@ event.preventDefault(); // Evita que el formulario recargue la página
   li.className = 'flex items-center justify-between bg-gray-900 p-3 rounded-lg shadow-sm hover:shadow-md transition duration-200';
 
   const span = document.createElement('span');
-  span.className = 'truncate text-white';
+  span.className = 'break words text-white';
   span.textContent = texto;
 
   const botonEliminar = document.createElement('button');

@@ -20,8 +20,8 @@ function mostrarMensajeError() {
   toast.className = `fixed top-6 left-1/2 transform -translate-x-1/2 bg-${colorError}-600 max-w-md text-white px-4 py-2 rounded-lg shadow-lg z-50 flex items-center gap-2`;
   toast.classList.remove('hidden');
   toast.innerHTML = `
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
-      <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12ZM12 8.25a.75.75 0 0 1 .75.75v3.75a.75.75 0 0 1-1.5 0V9a.75.75 0 0 1 .75-.75Zm0 8.25a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" clip-rule="evenodd" />
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
     </svg>
     <span>${mensajeError}</span>
   `;
@@ -29,7 +29,7 @@ function mostrarMensajeError() {
 
   setTimeout(() => {
     toast.classList.add('hidden');
-  }, 3000);
+  }, 5000);
 }
 
 function addTask(event) { 
@@ -74,29 +74,40 @@ event.preventDefault(); // Evita que el formulario recargue la página
   `;
   botonEliminar.addEventListener('click', () => li.remove());
   botonEliminar.addEventListener('click', () => localStorage.removeItem('tarea')); // Eliminar la tarea de localStorage
+  
+  const label = document.createElement('label');
+  label.className ="custom-checkbox";
 
   const checkbox = document.createElement('input');
   checkbox.type = 'checkbox';
-  checkbox.className = 'form-checkbox h-6 w-6 accent-green-500';
   checkbox.title = 'Completar';
+  checkbox.style.display = 'none'; // Ocultar el checkbox por defecto
+
+  
   checkbox.addEventListener('click', () => {
-    if (checkbox.checked) {
-      span.classList.add('line-through', 'text-gray-400');
-    } else {
-      span.classList.remove('line-through', 'text-gray-400');
-    }
-    tarea.toggleCheck(); // Cambia el estado de la tarea
-    listTasks.find(t => t.text === texto).check = tarea.check; // Actualiza el estado en el arreglo
-    localStorage.setItem('tarea', JSON.stringify(listTasks)); // Guardar cambios en localStorage
+    if(checkbox.checked) {
+      span.classList.add('line-through', 'text-gray-400');}
+      else {
+        span.classList.remove('line-through', 'text-gray-400');
+      }
+      tarea.toggleCheck(); // Cambia el estado de la tarea
+      listTasks.find(t => t.text === texto).check = tarea.check; // Actualiza
+      localStorage.setItem('tarea', JSON.stringify(listTasks)); // Guardar cambios en localStorage
   });
+
+    label.appendChild(checkbox);
+    label.appendChild(span); // Añadir el span al label
+
+    const contenedorCheck = document.createElement('div');  
+    contenedorCheck.className = 'flex flex-1 items-start gap-3 break-words'; // Alinear checkbox
+    contenedorCheck.appendChild(label); // Añadir el label con checkbox y span
+
     const contenedorBotones = document.createElement('div');
-    contenedorBotones.className = 'flex items-center gap-3'; // Los agrupa y les da espacio uniforme
-    //contenedorBotones.appendChild(botonCheck);
-    contenedorBotones.appendChild(checkbox);
+    contenedorBotones.className = 'flex gap-3'; // Los agrupa y les da espacio uniforme
     contenedorBotones.appendChild(botonEliminar);
 
   // Agregar elementos
-  li.appendChild(span);
+  li.appendChild(contenedorCheck); // Alinear checkbox
   li.appendChild(contenedorBotones);
   lista.appendChild(li);
 
@@ -111,7 +122,9 @@ function loadTasks() {
   if (!tareasGuardadas.length) return;
 
   listTasks = tareasGuardadas.map(t => Object.assign(new task(), t));
-
+  // Ajustar el diseño para que el checkbox no se deforme con textos largos
+  // Usar un contenedor flex para checkbox y texto, y evitar que el checkbox se reduzca
+  // (esto replica el diseño de addTask)
   listTasks.forEach(tarea => {
     const li = document.createElement('li');
     li.className = 'flex items-center justify-between bg-gray-900 p-3 rounded-lg shadow-sm hover:shadow-md transition duration-200';
@@ -137,10 +150,14 @@ function loadTasks() {
       }
     });
 
-    const checkbox = document.createElement('input');
-    checkbox.type = 'checkbox';
-    checkbox.className = 'form-checkbox h-6 w-6 accent-green-500';
-    checkbox.title = 'Completar';
+    const label = document.createElement('label');
+  label.className ="custom-checkbox";
+
+  const checkbox = document.createElement('input');
+  checkbox.type = 'checkbox';
+  checkbox.title = 'Completar';
+  checkbox.style.display = 'none'; // Ocultar el checkbox por defecto
+
 
     // Marcar checkbox si la tarea está completada
     checkbox.checked = tarea.check;
@@ -159,12 +176,18 @@ function loadTasks() {
       localStorage.setItem('tarea', JSON.stringify(listTasks));
     });
 
+    label.appendChild(checkbox);
+    label.appendChild(span); // Añadir el span al label
+
+    const contenedorCheck = document.createElement('div');  
+    contenedorCheck.className = 'flex flex-1 items-start gap-3 break-words'; // Alinear checkbox
+    contenedorCheck.appendChild(label); // Añadir el label con checkbox y span
+
     const contenedorBotones = document.createElement('div');
-    contenedorBotones.className = 'flex items-center gap-3';
-    contenedorBotones.appendChild(checkbox);
+    contenedorBotones.className = 'flex gap-3';
     contenedorBotones.appendChild(botonEliminar);
 
-    li.appendChild(span);
+    li.appendChild(contenedorCheck); // Alinear checkbox
     li.appendChild(contenedorBotones);
     lista.appendChild(li);
   });

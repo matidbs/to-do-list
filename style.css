@@ -1,0 +1,41 @@
+input {
+  display: none;
+}
+
+span {
+  display: inline-block;
+  position: relative;
+  height: 2em;
+  width: 2em;
+  background: black;
+  border-radius: 100%;
+  transition: all 0.7s;
+}
+
+label {
+  font-size: 2em;
+  cursor: pointer;
+}
+
+label input:checked ~ span {
+  box-shadow: 0 0 30px 0 #09f;
+}
+
+label input:checked ~ span:after {
+  opacity: 1;
+}
+
+span:after {
+  content: "";
+  position: absolute;
+  border: solid white;
+  border-width: 0 0.3em 0.3em 0;
+  transform: rotate(45deg);
+  width: 0.5em;
+  height: 1em;
+  left: 0.6em;
+  top: 0.25em;
+  opacity: 0;
+  transition: 0.3s ease;
+}
+

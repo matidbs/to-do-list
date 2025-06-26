@@ -17,7 +17,7 @@ class task{
 
 function mostrarMensajeError() {
   const toast = document.getElementById('toast');
-  toast.className = `fixed top-6 left-1/2 transform -translate-x-1/2 bg-${colorError}-600 max-w-md text-white px-4 py-2 rounded-lg shadow-lg z-50 flex items-center gap-2`;
+  toast.className = `fixed top-4 left-1/2 transform -translate-x-1/2 bg-${colorError}-600 w-[90vw] sm:max-w-md text-white px-4 py-2 rounded-lg shadow-lg z-50 flex items-center gap-2 break-words`;
   toast.classList.remove('hidden');
   toast.innerHTML = `
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -122,9 +122,6 @@ function loadTasks() {
   if (!tareasGuardadas.length) return;
 
   listTasks = tareasGuardadas.map(t => Object.assign(new task(), t));
-  // Ajustar el diseño para que el checkbox no se deforme con textos largos
-  // Usar un contenedor flex para checkbox y texto, y evitar que el checkbox se reduzca
-  // (esto replica el diseño de addTask)
   listTasks.forEach(tarea => {
     const li = document.createElement('li');
     li.className = 'flex items-center justify-between bg-gray-900 p-3 rounded-lg shadow-sm hover:shadow-md transition duration-200';
